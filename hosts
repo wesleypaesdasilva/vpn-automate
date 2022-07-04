@@ -1,0 +1,2 @@
+[vpn_pnb]
+pnb	ansible_ssh_private_key_file=/home/linuxtux/.ssh/id_rsa	ansible_user=linuxtux
