@@ -10,7 +10,7 @@
 # Data of last change: 2022-07-04
 # Changer by: Wesley Paes
 #Obs:
-	#yyyyy - String que será substituída pelo cliente onde vamos criar a VPN (PNB, MAFRIG, C4)
+	#yyyyy - String que será substituída pelo cliente onde vamos criar a VPN (PNB, MARFRIG, C4)
 	#xxxxx - String que será substituída pelo nome do usuário que vamos trabalhar
 main()
 {
@@ -47,7 +47,7 @@ create-function()
 {
 	read -p "Qual o nome de usuario: " -t 20 USERVPN
 	echo "Para qual cliente será a VPN do builder?"
-select CHOICECLIENT in PNB MAFRIG C4 QUIT; do
+select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	echo "Voce escolheu $CHOICECLIENT"
 	case $CHOICECLIENT in
 	"PNB")
@@ -60,11 +60,11 @@ select CHOICECLIENT in PNB MAFRIG C4 QUIT; do
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" pnb:vpn-$USERVPN/$USERVPN-google-authenticator.txt ~
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" pnb:vpn-$USERVPN/$USERVPN.ovpn ~
 	;;
-	"MAFRIG")
-	sed -i -r 's/yyyyy/mafrig/g' $PWD/create_vpn_builders.yaml
+	"MARFRIG")
+	sed -i -r 's/yyyyy/marfrig/g' $PWD/create_vpn_builders.yaml
 	sed -i -r "s/xxxxx/$USERVPN/g" $PWD/create_vpn_builders.yaml
 	ansible-playbook $PWD/create_vpn_builders.yaml -i hosts
-	sed -i -r 's/mafrig/yyyyy/g' $PWD/create_vpn_builders.yaml
+	sed -i -r 's/marfrig/yyyyy/g' $PWD/create_vpn_builders.yaml
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/create_vpn_builders.yaml
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" marfrig:vpn-$USERVPN/$USERVPN.txt ~
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" marfrig:vpn-$USERVPN/$USERVPN-google-authenticator.txt ~
@@ -95,7 +95,7 @@ renew-function()
 {
 	read -p "Qual o nome de usuario: " -t 20 USERVPN
 	echo "Para qual cliente será a VPN do builder?"
-select CHOICECLIENT in PNB MAFRIG C4 QUIT; do
+select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	echo "Voce escolheu $CHOICECLIENT"
 	case $CHOICECLIENT in
 	"PNB")
@@ -106,7 +106,7 @@ select CHOICECLIENT in PNB MAFRIG C4 QUIT; do
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/renew_vpn_builders.yaml
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" pnb:vpn-$USERVPN/$USERVPN.ovpn ~
 	;;
-	"MAFRIG")
+	"MARFRIG")
 	sed -i -r 's/yyyyy/marfrig/g' $PWD/renew_vpn_builders.yaml
 	sed -i -r "s/xxxxx/$USERVPN/g" $PWD/renew_vpn_builders.yaml
 	ansible-playbook $PWD/renew_vpn_builders.yaml -i hosts
@@ -137,7 +137,7 @@ revoke-function()
 {
 	read -p "Qual o nome de usuario: " -t 20 USERVPN
 	echo "Para qual cliente será a VPN do builder?"
-select CHOICECLIENT in PNB MAFRIG C4 QUIT; do
+select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	echo "Voce escolheu $CHOICECLIENT"
 	case $CHOICECLIENT in
 	"PNB")
@@ -147,7 +147,7 @@ select CHOICECLIENT in PNB MAFRIG C4 QUIT; do
 	sed -i -r 's/pnb/yyyyy/g' $PWD/revoke_vpn_builders.yaml
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/revoke_vpn_builders.yaml
 	;;
-	"MAFRIG")
+	"MARFRIG")
 	sed -i -r 's/yyyyy/marfrig/g' $PWD/revoke_vpn_builders.yaml
 	sed -i -r "s/xxxxx/$USERVPN/g" $PWD/revoke_vpn_builders.yaml
 	ansible-playbook $PWD/revoke_vpn_builders.yaml -i hosts
