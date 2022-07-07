@@ -4,6 +4,14 @@
   vars:
     editvpnuser: xxxxx
   tasks:
+    - name: 'Create a directory if it does not exist'
+      environment:
+        USER_VPN: "{{ editvpnuser }}"
+      ansible.builtin.file:
+        path: ~/vpn-$USER_VPN
+        state: directory
+        mode: '0775'
+        
     - name: 'Renew VPN'
       environment:
         USER_VPN: "{{ editvpnuser }}"
