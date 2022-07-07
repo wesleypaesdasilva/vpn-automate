@@ -1,0 +1,13 @@
+---
+- name: revoke vpn user
+  hosts: yyyyy
+  vars:
+    editvpnuser: xxxxx
+  tasks:
+    - name: 'Revoke VPN'
+      environment:
+        USER_VPN: "{{ editvpnuser }}"
+      become: true
+      ansible.builtin.shell: 
+        cmd: ./revoke_client.sh $USER_VPN
+        chdir: /etc/openvpn/easy-rsa

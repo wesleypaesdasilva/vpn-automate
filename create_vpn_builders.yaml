@@ -17,7 +17,7 @@
         USER_VPN: "{{ editvpnuser }}"
       become: true
       ansible.builtin.shell: 
-        cmd: ./lab_add_client.sh $USER_VPN
+        cmd: ./add_client.sh $USER_VPN
         chdir: /etc/openvpn/easy-rsa
       
     - name: 'Create user'

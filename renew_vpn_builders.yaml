@@ -1,0 +1,20 @@
+---
+- name: renew vpn user
+  hosts: yyyyy
+  vars:
+    editvpnuser: xxxxx
+  tasks:
+    - name: 'Renew VPN'
+      environment:
+        USER_VPN: "{{ editvpnuser }}"
+      become: true
+      ansible.builtin.shell: 
+        cmd: ./renew_client.sh $USER_VPN
+        chdir: /etc/openvpn/easy-rsa
+      
+    - name: 'Copy and change permission user files'
+      environment:
+        USER_VPN: "{{ editvpnuser }}"
+      become: true
+      ansible.builtin.shell:
+        cmd: cp /etc/openvpn/client/$USER_VPN/$USER_VPN.ovpn /home/$SUDO_USER/vpn-$USER_VPN/ && chmod 775 /home/$SUDO_USER/vpn-$USER_VPN/*
