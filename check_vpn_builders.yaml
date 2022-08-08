@@ -10,10 +10,7 @@
       become: true
       ansible.builtin.shell:
         cmd: ssl-cert-check -d /etc/openvpn/easy-rsa/pki/issued | grep $USER_VPN
-      register: command_output
-
-    - name: 'Print return information from the previous task'
-      ansible.builtin.debug:
-        var: result
-        verbosity: 2
+      register: result
+    
+    - debug: var=result.stdout_lines
       
