@@ -26,6 +26,9 @@ select CHOICE in CREATE RENEW REVOKE QUIT; do
 	"CREATE")
 		create-function
 	;;
+	"CHECK")
+		check-function
+	;;
 	"RENEW")
 		renew-function
 	;;
@@ -78,6 +81,48 @@ select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/create_vpn_builders.yaml
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" c4:vpn-$USERVPN/$USERVPN.txt ~
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" c4:vpn-$USERVPN/$USERVPN-google-authenticator.txt ~
+	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" c4:vpn-$USERVPN/$USERVPN.ovpn ~
+	;;
+	"QUIT")
+		break
+	;;
+	*)
+		echo "Invalid option"
+		break
+	;;
+	esac
+done
+}
+
+check-function()
+{
+	read -p "Qual o nome de usuario: " -t 20 USERVPN
+	echo "Para qual cliente será a VPN do builder?"
+select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
+	echo "Voce escolheu $CHOICECLIENT"
+	case $CHOICECLIENT in
+	"PNB")
+	sed -i -r 's/yyyyy/pnb/g' $PWD/check_vpn_builders.yaml
+	sed -i -r "s/xxxxx/$USERVPN/g" $PWD/check_vpn_builders.yaml
+	ansible-playbook $PWD/check_vpn_builders.yaml -i hosts
+	sed -i -r 's/pnb/yyyyy/g' $PWD/check_vpn_builders.yaml
+	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/check_vpn_builders.yaml
+	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" pnb:vpn-$USERVPN/$USERVPN.ovpn ~
+	;;
+	"MARFRIG")
+	sed -i -r 's/yyyyy/marfrig/g' $PWD/check_vpn_builders.yaml
+	sed -i -r "s/xxxxx/$USERVPN/g" $PWD/check_vpn_builders.yaml
+	ansible-playbook $PWD/check_vpn_builders.yaml -i hosts
+	sed -i -r 's/marfrig/yyyyy/g' $PWD/check_vpn_builders.yaml
+	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/check_vpn_builders.yaml
+	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" marfrig:vpn-$USERVPN/$USERVPN.ovpn ~
+	;;
+	"C4")
+	sed -i -r 's/yyyyy/c4/g' $PWD/check_vpn_builders.yaml
+	sed -i -r "s/xxxxx/$USERVPN/g" $PWD/check_vpn_builders.yaml
+	ansible-playbook $PWD/check_vpn_builders.yaml -i hosts
+	sed -i -r 's/c4/yyyyy/g' $PWD/check_vpn_builders.yaml
+	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/check_vpn_builders.yaml
 	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" c4:vpn-$USERVPN/$USERVPN.ovpn ~
 	;;
 	"QUIT")

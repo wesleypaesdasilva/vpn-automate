@@ -1,0 +1,12 @@
+---
+- name: check vpn user
+  hosts: yyyyy
+  vars:
+    editvpnuser: xxxxx
+  tasks:
+    - name: 'Check user'
+      environment:
+        USER_VPN: "{{ editvpnuser }}"
+      become: true
+      ansible.builtin.shell:
+        cmd: ssl-cert-check -d /etc/openvpn/easy-rsa/pki/issued | grep $USER_VPN
