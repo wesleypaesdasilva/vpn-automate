@@ -107,7 +107,6 @@ select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	ansible-playbook $PWD/check_vpn_builders.yaml -i hosts
 	sed -i -r 's/pnb/yyyyy/g' $PWD/check_vpn_builders.yaml
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/check_vpn_builders.yaml
-	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" pnb:vpn-$USERVPN/$USERVPN.ovpn ~
 	;;
 	"MARFRIG")
 	sed -i -r 's/yyyyy/marfrig/g' $PWD/check_vpn_builders.yaml
@@ -115,7 +114,6 @@ select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	ansible-playbook $PWD/check_vpn_builders.yaml -i hosts
 	sed -i -r 's/marfrig/yyyyy/g' $PWD/check_vpn_builders.yaml
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/check_vpn_builders.yaml
-	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" marfrig:vpn-$USERVPN/$USERVPN.ovpn ~
 	;;
 	"C4")
 	sed -i -r 's/yyyyy/c4/g' $PWD/check_vpn_builders.yaml
@@ -123,7 +121,6 @@ select CHOICECLIENT in PNB MARFRIG C4 QUIT; do
 	ansible-playbook $PWD/check_vpn_builders.yaml -i hosts
 	sed -i -r 's/c4/yyyyy/g' $PWD/check_vpn_builders.yaml
 	sed -i -r "s/$USERVPN/xxxxx/g" $PWD/check_vpn_builders.yaml
-	scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" c4:vpn-$USERVPN/$USERVPN.ovpn ~
 	;;
 	"QUIT")
 		break
