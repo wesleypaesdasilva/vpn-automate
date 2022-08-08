@@ -20,7 +20,7 @@ echo "O caminho da sua chave precisa estar descrito dentro do hosts aqui do proj
 sleep 1
 echo "O que deseja executar?"
 
-select CHOICE in CREATE RENEW REVOKE QUIT; do
+select CHOICE in CREATE CHECK RENEW REVOKE QUIT; do
 	echo "Voce escolheu $CHOICE"
 	case $CHOICE in
 	"CREATE")
