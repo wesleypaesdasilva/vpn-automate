@@ -10,3 +10,8 @@
       become: true
       ansible.builtin.shell:
         cmd: ssl-cert-check -d /etc/openvpn/easy-rsa/pki/issued | grep $USER_VPN
+      register: command_output
+
+    - debug:
+      var: command_output.stdout_lines
+      
